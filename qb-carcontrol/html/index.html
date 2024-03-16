@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0R-CarControl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <script src="http://www.youtube.com/player_api"></script>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js" integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+    <div class="mini-surukle">
+        <div class="mini-menu" style="display: none;">
+            <i class="fa-solid fa-expand"></i>
+            <div class="neon-settings-mini">
+                <p class="neon-title">Neon Settings</p>
+                <div class="neon-button" onclick="SetNeonStyle('default')">Flat</div>
+                <div class="neon-button" onclick="SetNeonStyle('neon1')">Mode 2</div>
+                <div class="neon-button" onclick="SetNeonStyle('neon2')">Mode 3</div>
+                <div class="neon-button" onclick="SetNeonStyle('random')">Random</div>
+            </div>
+            <div class="seat-settings-mini">
+                <p class="seat-title">Seat Settings</p>
+                <div class="seat-button" onclick="setcontrol('seat',-1)">Driver Seat</div>
+                <div class="seat-button" onclick="setcontrol('seat',0)">Seat 2</div>
+                <div class="seat-button" onclick="setcontrol('seat',1)">Seat 3</div>
+                <div class="seat-button" onclick="setcontrol('seat',2)">Seat 4</div>
+            </div>
+            <div class="door-settings-mini">
+                <p class="seat-title">Door Settings</p>
+                <div data-index="4" class="mdoor-button">Hood</div>
+                <div data-index="0" class="mdoor-button">Door 1</div>
+                <div data-index="1" class="mdoor-button">Door 2</div>
+                <div data-index="2" class="mdoor-button">Door 3</div>
+                <div data-index="3" class="mdoor-button">Door 4</div>
+                <div class="mdoor-button" data-index="5">Trunk</div>
+            </div>
+        </div>
+    </div>
+    <div style="display: none" id="player"></div>
+    <div class="surukle">
+        <div class="main-wrapper" style="display: none;">
+            <div class="faxmark"></div>
+            <div class="header">
+                <div class="fawindowminimize">
+                    <i class="fa-solid fa-expand"></i>
+                </div>
+                <p class="header-title">Car Controller</p>
+                <img src="./images/logo-icon.png" class="logo-icon">
+                <div class="search-input-container">
+                    <img src="./images/Search.svg" class="search-icon">
+                    <input type="text" class="spotify-input" placeholder="Youtube Link...">
+                </div>
+            </div>
+            <div class="neon-settings">
+                <p class="neon-title">Neon Settings</p>
+                <div class="neon-button" onclick="SetNeonStyle('default')">Flat</div>
+                <div class="neon-button" onclick="SetNeonStyle('neon1')">Mode 2</div>
+                <div class="neon-button" onclick="SetNeonStyle('neon2')">Mode 3</div>
+                <div class="neon-button" onclick="SetNeonStyle('random')">Random</div>
+            </div>
+            <div class="seat-settings">
+                <p class="seat-title">Seat Settings</p>
+                <div class="seat-button" onclick="setcontrol('seat',-1)">Driver Seat</div>
+                <div class="seat-button" onclick="setcontrol('seat',0)">Seat 2</div>
+                <div class="seat-button" onclick="setcontrol('seat',1)">Seat 3</div>
+                <div class="seat-button" onclick="setcontrol('seat',2)">Seat 4</div>
+            </div>
+            <div class="lights-settings">
+                <p class="lights-title">Shortcuts</p>
+                <div class="lights-button" data-action="toggleHeadLight">Head Light</div>
+                <div class="lights-button" data-action="toggleInteriorLight">Interior Light</div>
+                <div class="lights-button" data-action="toggleEngine">Toggle Engine</div>
+                <div class="lights-button" data-nopage="1" data-action="showParkCam" id="open-mini"><i class="fa-solid fa-camera"></i> Park Camera</div>
+            </div>
+            <div class="left-grid">
+                <div class="live-map-container">
+                    <img src="./images/yol.svg" class="yol">
+                    <img src="./images/ok.svg" class="ok">
+                    <div class="distance-container">
+                        <p class="distance">600m</p>
+                        <p class="distance-description">600 meters to destination</p>
+                        <img src="./images/ileri.svg" class="yön">
+                    </div>
+                    <div class="location-container">
+                        <p class="location-1">Los Santos Freeway</p>
+                        <p class="location-2">Grid Street No1</p>
+                    </div>
+                </div> 
+                <div class="spotify-container">
+                    <div class="spo-buttons">
+                        <img src="./images/back.svg" id="previous-btn" class="back-button">
+                        <img src="./images/start.svg" id="previous-btn" class="start-button">
+                        <img src="./images/stop.svg" class="play-button">
+                        <img src="./images/end.svg" id="skip-btn" class="end-button">
+                        <img src="./images/next.svg" id="skip-btn" class="forward-button">
+                    </div>
+                    <p class="song-name">Nothing to play</p>
+                    <p class="song-author">Unkown</p>
+                    <input type="range" class="volume" min="0" max="100">
+                    <div class="music-timeline-container">
+                        <div class="timeline"></div>
+                    </div>
+                    <img src="" alt="" class="cover-image">
+                </div>
+                <div class="temperature-container">
+                    <img src="./images/bi_thermometer-snow.svg" class="thermo-icon">
+                    <p class="temperature-title">Tempature</p>
+                    <p class="interior-temperature">INTERIOR: 24 C</p>
+                    <p class="temperature">23° C</p>
+                    <p class="window-status">WINDOW CLOSED</p>
+                </div>
+                <div class="kilometer-container">
+                    <p class="kilometer-title">Kilometer</p>
+                    <p class="kilometer">KILOMETER: 240.000 KM</p>
+                    <div class="kilometer-chart-container">
+                        <p class="chart-km-zero">0 KMH</p>
+                        <p class="chart-km">240.000 KMH</p>
+                        <div class="line"></div>
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>  
+            <div class="right-grid">
+                <div class="status-container">
+                    <div class="status-icon">
+                        <img src="./images/safe.svg" class="status-svg">
+                        <div>
+                            <p class="status">Status : Safe</p>
+                            <p class="status-subtitle">Allows you to check the condition of your vehicle</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="fuel-container">
+                    <p class="fuel-title">Fuel</p>
+                    <p class="fuel">65%</p>
+                    <svg class="fuel-bar" viewBox="0 0 127 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="path-1-inside-1_246_3" fill="white">
+                    <path d="M0.010613 63.3208C0.316046 46.354 7.19195 30.1929 19.1481 18.3404C31.1042 6.48781 47.1772 -0.10129 63.8834 0.00117583C80.5897 0.103641 96.5832 6.88942 108.397 18.8878C120.212 30.8861 126.895 47.1303 126.999 64.0997L110.432 64.2041C110.356 51.662 105.416 39.6557 96.6841 30.7877C87.952 21.9196 76.1311 16.9042 63.7834 16.8285C51.4357 16.7527 39.556 21.6228 30.7192 30.3831C21.8823 39.1434 16.8003 51.0881 16.5745 63.6284L0.010613 63.3208Z"/>
+                    </mask>
+                    <path d="M0.010613 63.3208C0.316046 46.354 7.19195 30.1929 19.1481 18.3404C31.1042 6.48781 47.1772 -0.10129 63.8834 0.00117583C80.5897 0.103641 96.5832 6.88942 108.397 18.8878C120.212 30.8861 126.895 47.1303 126.999 64.0997L110.432 64.2041C110.356 51.662 105.416 39.6557 96.6841 30.7877C87.952 21.9196 76.1311 16.9042 63.7834 16.8285C51.4357 16.7527 39.556 21.6228 30.7192 30.3831C21.8823 39.1434 16.8003 51.0881 16.5745 63.6284L0.010613 63.3208Z" stroke="#6709eb" stroke-width="124" mask="url(#path-1-inside-1_246_3)"/>
+                </svg>
+                    <img src="./images/fuel-icon.svg" class="fuel-icon">
+                </div>
+                <div class="rpm-container">
+                    <p class="rpm-title">RPM</p>
+                    <p class="rpm">R</p>
+                    <svg class="rpm-bar" viewBox="0 0 127 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="path-1-inside-1_246_3" fill="white">
+                    <path d="M0.010613 63.3208C0.316046 46.354 7.19195 30.1929 19.1481 18.3404C31.1042 6.48781 47.1772 -0.10129 63.8834 0.00117583C80.5897 0.103641 96.5832 6.88942 108.397 18.8878C120.212 30.8861 126.895 47.1303 126.999 64.0997L110.432 64.2041C110.356 51.662 105.416 39.6557 96.6841 30.7877C87.952 21.9196 76.1311 16.9042 63.7834 16.8285C51.4357 16.7527 39.556 21.6228 30.7192 30.3831C21.8823 39.1434 16.8003 51.0881 16.5745 63.6284L0.010613 63.3208Z"/>
+                    </mask>
+                    <path d="M0.010613 63.3208C0.316046 46.354 7.19195 30.1929 19.1481 18.3404C31.1042 6.48781 47.1772 -0.10129 63.8834 0.00117583C80.5897 0.103641 96.5832 6.88942 108.397 18.8878C120.212 30.8861 126.895 47.1303 126.999 64.0997L110.432 64.2041C110.356 51.662 105.416 39.6557 96.6841 30.7877C87.952 21.9196 76.1311 16.9042 63.7834 16.8285C51.4357 16.7527 39.556 21.6228 30.7192 30.3831C21.8823 39.1434 16.8003 51.0881 16.5745 63.6284L0.010613 63.3208Z" stroke="#6709eb" stroke-width="124" mask="url(#path-1-inside-1_246_3)"/>
+                    </svg>
+                    <img src="./images/fuel-icon.svg" class="rpm-icon">
+                </div>
+                <div class="speed-container">
+                    <div class="speed-center">
+                        <p class="speed">50</p>
+                        <p class="speed-type">KMH</p>
+                        <svg class="speed-bar" viewBox="0 0 345 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <mask id="path-1-inside-1_264_10" fill="white">
+                        <path d="M23.7536 259.854C8.42886 233.76 0.23863 204.092 0.00513482 173.831C-0.22836 143.57 7.5031 113.78 22.4233 87.4518C37.3435 61.1235 58.9275 39.1836 85.0081 23.8348C111.089 8.4859 140.748 0.268197 171.009 0.00668517C201.27 -0.254827 231.067 7.44905 257.409 22.3449C283.752 37.2407 305.711 58.8043 321.084 84.8708C336.457 110.937 344.703 140.589 344.992 170.85C345.282 201.111 337.605 230.915 322.734 257.271L320.09 255.779C334.7 229.887 342.241 200.607 341.956 170.879C341.672 141.151 333.572 112.021 318.469 86.413C303.367 60.8053 281.794 39.6212 255.915 24.9876C230.037 10.3539 200.764 2.7856 171.036 3.04251C141.307 3.29942 112.17 11.3725 86.548 26.4512C60.9263 41.53 39.7222 63.0837 25.0646 88.9486C10.407 114.813 2.81159 144.079 3.04098 173.808C3.27036 203.536 11.3165 232.681 26.3715 258.317L23.7536 259.854Z"/>
+                        </mask>
+                        <path d="M23.7536 259.854C8.42886 233.76 0.23863 204.092 0.00513482 173.831C-0.22836 143.57 7.5031 113.78 22.4233 87.4518C37.3435 61.1235 58.9275 39.1836 85.0081 23.8348C111.089 8.4859 140.748 0.268197 171.009 0.00668517C201.27 -0.254827 231.067 7.44905 257.409 22.3449C283.752 37.2407 305.711 58.8043 321.084 84.8708C336.457 110.937 344.703 140.589 344.992 170.85C345.282 201.111 337.605 230.915 322.734 257.271L320.09 255.779C334.7 229.887 342.241 200.607 341.956 170.879C341.672 141.151 333.572 112.021 318.469 86.413C303.367 60.8053 281.794 39.6212 255.915 24.9876C230.037 10.3539 200.764 2.7856 171.036 3.04251C141.307 3.29942 112.17 11.3725 86.548 26.4512C60.9263 41.53 39.7222 63.0837 25.0646 88.9486C10.407 114.813 2.81159 144.079 3.04098 173.808C3.27036 203.536 11.3165 232.681 26.3715 258.317L23.7536 259.854Z" stroke="#6709eb" stroke-width="148" mask="url(#path-1-inside-1_264_10)"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="car-container">
+                    <img data-index="4" src="./images/hood.svg" class="kapilar" id="ön-kaput">
+                    <img data-index="5" src="./images/arka.svg" class="kapilar" id="arka-kaput">
+                    <!--  -->
+                    <img data-index="0" src="./images/frontleft.svg" class="kapilar" id="sol-ön-kapi">
+                    <img data-index="2" src="./images/arkasag.svg" class="kapilar" id="sol-arka-kapi">
+                    <!--  -->
+                    <div class="right-kapi">
+                        <img data-index="1" src="./images/frontleft.svg" class="kapilar" id="sağ-ön-kapi">
+                        <img data-index="3" src="./images/arkasag.svg" class="kapilar" id="sağ-arka-kapi">
+                    </div>
+                    <!--  -->
+                    <img src="./images/car.png" class="car">
+                    <p class="plaka">1234567</p>
+                    <img src="./images/plaka.svg" class="plaka-back">
+                </div>
+            </div>
+            <script src="./script.js"></script>
+        </div>
+    </div>
+
+</body>
+
+</html>
